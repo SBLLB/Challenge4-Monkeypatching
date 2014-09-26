@@ -11,6 +11,6 @@ class Array
 
 end
 
-p [1, 2, 3, 4].fake_inject
+p [1, 2, 3, 4].iterator_inject
 
 
