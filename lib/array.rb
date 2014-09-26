@@ -9,8 +9,14 @@ class Array
 		return sum
 	end
 
+	def recursive_inject
+		return 0 unless self.length > 0
+		return self.shift + self.recursive_inject
+
+	end
+
 end
 
 p [1, 2, 3, 4].iterator_inject
 
-
+p [1, 2, 3, 4].recursive_inject
