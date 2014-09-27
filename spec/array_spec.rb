@@ -1,10 +1,14 @@
 require 'array'
 
 describe Array do 
-	context 'The replacement inject methods should' do 
+
+	arr = [1, 2, 3, 4]
+
+	context 'The replacement inject method should' do 
+
+
 		context 'should return the sum of numbers in an array ' do 
 
-		arr = [1, 2, 3, 4]
 			 it 'using an iterator' do 
 			 	expect(arr.iterator_inject() ).to eq(10)
 			 end
@@ -17,8 +21,13 @@ describe Array do
 		context 'should return the results of a block passed' do 
 			
 			it 'with an enumerator passed as an argument' do 
-				expect([1, 2, 3, 4].total_inject(0) { |accumulator, item| accumulator + item }).to eq(10)
+				expect([1,2,3,4].fake_inject(0) {|accumulator, item| accumulator + item }).to eq(10)
 			end
+
+			it 'and set the enumerator to the first array object if none passed' do 
+				expect([1,2,3,4].fake_inject { |accumulator, item| accumulator + item }).to eq(10)
+			end
+
 		end 
 	end
 end
