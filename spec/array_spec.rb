@@ -2,33 +2,30 @@ require 'array'
 
 describe Array do 
 
-	arr = [1, 2, 3, 4]
-
 	context 'The replacement inject method should' do 
 
+		arr = [1, 2, 3, 4]
 
-		context 'should return the sum of numbers in an array ' do 
-
-			 it 'using an iterator' do 
-			 	expect(arr.iterator_inject() ).to eq(10)
-			 end
-		 	
-		 	it 'using recursion' do 
-			 	expect(arr.recursive_inject).to eq 10 
-			end
-		end
-
-		context 'should return the results of a block passed' do 
+		context 'return the results of a block' do 
 			
-			it 'with an enumerator passed as an argument' do 
-				expect([1,2,3,4].fake_inject(0) {|accumulator, item| accumulator + item }).to eq(10)
+			it 'when an enumerator is passed as an argument' do 
+				expect(arr.iterator_inject(0) {|accumulator, element| accumulator + element }).to eq(10)
 			end
 
-			it 'and set the enumerator to the first array object if none passed' do 
-				expect([1,2,3,4].fake_inject { |accumulator, item| accumulator + item }).to eq(10)
+			it 'when no enumerator is passed, defaulting to the first array element' do 
+				expect(arr.iterator_inject { |accumulator, element| accumulator + element }).to eq(10)
 			end
-
 		end 
+
+		context 'successfully calculate' do 
+			it 'the sum of all elements in an array' do 
+				expect(arr.iterator_inject { |accumulator, element| accumulator + element }).to eq(arr.inject { |accumulator, element| accumulator + element })
+			end 
+
+			it 'the multiplication of all elements in an array' do 
+				expect(arr.iterator_inject { |accumulator, element| accumulator * element }).to eq(arr.inject { |accumulator, element| accumulator * element })
+			end 
+		end
 	end
 end
 
