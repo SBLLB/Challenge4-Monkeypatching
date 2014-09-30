@@ -3,19 +3,34 @@
 class Array
 
 
-	def iterator_inject(accumulator = self.first)
-		if accumulator = self.first
+	def iterator_inject(accumulator = nil, symbol = nil)
+		if symbol.is_a?(Symbol) && accumulator.nil?
+			accumulator = self.first
+			self[1..-1].each do |element|
+			accumulator = accumulator.send(symbol, element)
+			end
+		elsif
+			symbol == nil && accumulator.nil?
+			accumulator = self.first
 			self[1..-1].each do |element|
 				accumulator = yield(accumulator, element)
 			end
-		else
+		elsif 
+			symbol == nil && !accumulator.nil?
 			self[0..-1].each do |element|
 				accumulator = yield(accumulator, element)
-			end
+			end	
+		else
+			symbol.is_a?(Symbol) && !accumulator.nil?
+			self[0..-1].each do |element|
+				accumulator = accumulator.send(symbol, element)
 		end
+			
 		return accumulator
 	end
 end
+
+# p [1,2,3,4].iterator_inject(2) {|element, item| element + item }
 
 	# def iterator_sum
 	# 	sum  = 0 
