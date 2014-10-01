@@ -1,36 +1,38 @@
 #! /usr/bin/env ruby
 
 class Array
-
-
 	def iterator_inject(accumulator = nil, symbol = nil)
-		if symbol.is_a?(Symbol) && accumulator.nil?
-			accumulator = self.first
+		 if accumulator.is_a?(Symbol) && symbol == nil 
+			total = self.first
 			self[1..-1].each do |element|
-			accumulator = accumulator.send(symbol, element)
+			total = total.send(accumulator, element)
 			end
+			return total
 		elsif
 			symbol == nil && accumulator.nil?
 			accumulator = self.first
 			self[1..-1].each do |element|
 				accumulator = yield(accumulator, element)
 			end
+			return accumulator
 		elsif 
 			symbol == nil && !accumulator.nil?
 			self[0..-1].each do |element|
+				puts "here's the problem #{accumulator}"
 				accumulator = yield(accumulator, element)
 			end	
+			return accumulator
 		else
-			symbol.is_a?(Symbol) && !accumulator.nil?
 			self[0..-1].each do |element|
 				accumulator = accumulator.send(symbol, element)
+			end
+			return accumulator
 		end
-			
-		return accumulator
+		
 	end
 end
 
-# p [1,2,3,4].iterator_inject(2) {|element, item| element + item }
+# p [1,2,3,4].iterator_inject {|element, item| element + item }
 
 	# def iterator_sum
 	# 	sum  = 0 

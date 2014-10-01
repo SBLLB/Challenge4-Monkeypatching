@@ -17,7 +17,7 @@ describe Array do
 			end
 		end 
 
-		context 'successfully calculate' do 
+		context 'successfully calculate when a block is passed' do 
 			it 'the sum of all elements in an array' do 
 				expect(arr.iterator_inject { |accumulator, element| accumulator + element }).to eq(arr.inject { |accumulator, element| accumulator + element })
 			end 
@@ -25,6 +25,17 @@ describe Array do
 			it 'the multiplication of all elements in an array' do 
 				expect(arr.iterator_inject { |accumulator, element| accumulator * element }).to eq(arr.inject { |accumulator, element| accumulator * element })
 			end 
+		end
+
+		context 'succesfully calculate when a symbol is passed ' do 
+			it 'on its own, without an enumerator' do 
+				expect(arr.iterator_inject(:+)).to eq(arr.inject(:+))
+			end
+			
+			it 'with an enumerator present too' do 
+				expect(arr.iterator_inject(2, :+)).to eq(arr.inject(2, :+))
+			end
+
 		end
 	end
 end
