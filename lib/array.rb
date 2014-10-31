@@ -2,35 +2,39 @@
 
 class Array
 	def iterator_inject(accumulator = nil, symbol = nil)
-		 if accumulator.is_a?(Symbol) && symbol == nil 
-			total = self.first
-			self[1..-1].each do |element|
+		copy = self.dup
+
+		 if accumulator.is_a?(Symbol) && !symbol
+			total = copy.shift
+			copy.each do |element|
 			total = total.send(accumulator, element)
 			end
 			return total
-		elsif
-			symbol == nil && accumulator.nil?
-			accumulator = self.first
-			self[1..-1].each do |element|
+		end
+		if
+			!symbol && !accumulator
+			accumulator = copy.shift
+			copy.each do |element|
 				accumulator = yield(accumulator, element)
-			end
-			return accumulator
-		elsif 
-			symbol == nil && !accumulator.nil?
-			self[0..-1].each do |element|
-				puts "here's the problem #{accumulator}"
-				accumulator = yield(accumulator, element)
-			end	
-			return accumulator
-		else
-			self[0..-1].each do |element|
-				accumulator = accumulator.send(symbol, element)
 			end
 			return accumulator
 		end
-		
+		if
+			!symbol && accumulator
+			copy.each do |element|
+				accumulator = yield(accumulator, element)
+			end	
+			return accumulator
+		end	
+		copy.each do |element|
+			accumulator = accumulator.send(symbol, element)
+		end
+		return accumulator	
 	end
+
 end
+
+
 
 # p [1,2,3,4].iterator_inject {|element, item| element + item }
 
