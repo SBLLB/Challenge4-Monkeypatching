@@ -34,7 +34,4 @@ Run the rspec tests ``` $ cd wk2_challenge4_arrays ```
 
 
 ### To do 
-- [ ] Employ SOLID principles more throughout.  
-- [ ] Separate Oystercard into separate class/module.  
-
-
+- [ ] Refactor to employ DRY principles
